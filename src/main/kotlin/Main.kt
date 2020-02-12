@@ -52,12 +52,13 @@ fun main(args: Array<String>) {
     println(ANSI_BLUE, "Maghrib: ${timings.maghrib}")
     println(ANSI_BLUE, "Isha: ${timings.isha}")
     println(ANSI_WHITE, "-----------------------------")
-    println(ANSI_CYAN, "Imsak: ${timings.imsak}")
-    println(ANSI_CYAN, "Midnight: ${timings.midnight}")
-    println(ANSI_CYAN, "Sunrise: ${timings.sunrise}")
+    println(ANSI_CYAN, "☀️ Sunrise: ${timings.sunrise}")
+    println(ANSI_CYAN, "\uD83C\uDF19 Midnight: ${timings.midnight}")
     println(ANSI_CYAN, "Sunset: ${timings.sunset}")
+    println(ANSI_CYAN, "Imsak: ${timings.imsak}")
     println(ANSI_WHITE, "-----------------------------")
 
+    timings.maghrib = "16:30"
 
     val prayerTimes = mutableMapOf<String, Date>()
 
@@ -67,14 +68,19 @@ fun main(args: Array<String>) {
     prayerTimes["Dhuhr"] = parseTime(timings.dhuhr)
     prayerTimes["Fajr"] = parseTime(timings.fajr)
 
-    val timeDistances = mutableMapOf<String, Long>()
-    for (prayer in prayerTimes) {
-        val diff = prayer.value.time - now.time
+    while (true) {
 
-        if (diff > 0) {
-            timeDistances[prayer.key] = diff
+        val timeDistances = mutableMapOf<String, Long>()
+        for (prayer in prayerTimes) {
+            val diff = prayer.value.time - Date().time
+
+            if (diff > 0) {
+                timeDistances[prayer.key] = diff
+            }
         }
+
+        val nextPrayer = timeDistances.toList().sortedBy { (_, value) -> value }.toMap().toList().first()
+        print(ANSI_GREEN, "\r${nextPrayer.first} in ${getDuration(nextPrayer.second)}")
+        Thread.sleep(1000)
     }
-    val nextPrayer = timeDistances.toList().sortedBy { (_, value) -> value }.toMap().toList().first()
-    println(ANSI_GREEN, "${nextPrayer.first} in ${getDuration(nextPrayer.second)}")
 }

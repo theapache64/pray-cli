@@ -8,14 +8,20 @@ const val ANSI_PURPLE = "\u001B[35m"
 const val ANSI_CYAN = "\u001B[36m"
 const val ANSI_WHITE = "\u001B[37m"
 
-fun printlnBlue(text: String) {
-    printColor("$ANSI_BLUE$text")
-}
 
 fun println(color: String, text: String) {
+    printlnColor("$color$text")
+}
+
+
+fun print(color: String, text: String) {
     printColor("$color$text")
 }
 
 fun printColor(text: String) {
+    print("$text$ANSI_RESET")
+}
+
+fun printlnColor(text: String) {
     println("$text$ANSI_RESET")
 }
