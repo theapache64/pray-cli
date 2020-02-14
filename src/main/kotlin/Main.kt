@@ -58,8 +58,6 @@ fun main(args: Array<String>) {
     println(ANSI_CYAN, "Imsak: ${timings.imsak}")
     println(ANSI_WHITE, "-----------------------------")
 
-    timings.maghrib = "16:30"
-
     val prayerTimes = mutableMapOf<String, Date>()
 
     prayerTimes["Isha"] = parseTime(timings.isha)

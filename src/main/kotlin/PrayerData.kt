@@ -26,7 +26,7 @@ data class Timings(
     @SerializedName("Isha")
     val isha: String, // 19:44
     @SerializedName("Maghrib")
-    var maghrib: String, // 18:32
+    val maghrib: String, // 18:32
     @SerializedName("Midnight")
     val midnight: String, // 00:39
     @SerializedName("Sunrise")
