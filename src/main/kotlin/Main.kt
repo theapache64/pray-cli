@@ -69,6 +69,7 @@ fun main(args: Array<String>) {
     while (true) {
 
         val timeDistances = mutableMapOf<String, Long>()
+
         for (prayer in prayerTimes) {
             val diff = prayer.value.time - Date().time
 
@@ -77,8 +78,12 @@ fun main(args: Array<String>) {
             }
         }
 
-        val nextPrayer = timeDistances.toList().sortedBy { (_, value) -> value }.toMap().toList().first()
-        print(ANSI_GREEN, "\r${nextPrayer.first} in ${getDuration(nextPrayer.second)}")
-        Thread.sleep(1000)
+        if (timeDistances.isNotEmpty()) {
+            val nextPrayer = timeDistances.toList().sortedBy { (_, value) -> value }.toMap().toList().first()
+            print(ANSI_GREEN, "\r${nextPrayer.first} in ${getDuration(nextPrayer.second)}")
+            Thread.sleep(1000)
+        } else {
+            break
+        }
     }
 }
