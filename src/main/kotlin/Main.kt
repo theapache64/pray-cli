@@ -1,6 +1,8 @@
 import TimeUtils.getDuration
 import TimeUtils.parseTime
 import com.google.gson.Gson
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.File
 import java.net.URL
 import java.text.SimpleDateFormat
@@ -39,8 +41,14 @@ fun main(args: Array<String>) {
         gson.fromJson(json, Timings::class.java)
     } else {
 
-        val prayerJson =
-            URL("http://api.aladhan.com/v1/timingsByCity?city=$city&country=$country&method=$method&school=$school").readText()
+        val url = "http://api.aladhan.com/v1/timingsByCity?city=$city&country=$country&method=$method&school=$school"
+        val client = OkHttpClient()
+        val prayerJson = client.newCall(
+            Request.Builder()
+                .url(url)
+                .build()
+        ).execute().body!!.string()
+
         val timings = gson.fromJson(prayerJson, PrayerData::class.java).data.timings
         val timingsJson = gson.toJson(timings)
         prayerDataCacheToday.writeText(timingsJson)

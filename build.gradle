@@ -12,6 +12,9 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'com.google.code.gson:gson:2.8.6'
+
+	// OkHttp : For networking
+	implementation 'com.squareup.okhttp3:okhttp:4.7.2'
 }
 
 compileKotlin {
